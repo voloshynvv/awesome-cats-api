@@ -1,5 +1,7 @@
-import React from 'react';
-
 export const About = () => {
-  return <div>About</div>;
+  return (
+    <div>
+      <h1>About page</h1>
+    </div>
+  );
 };

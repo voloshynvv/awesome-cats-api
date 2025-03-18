@@ -1,9 +1,16 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Provider } from '@/components/ui/provider';
 
-interface ProvidersProps {
-  children: React.ReactNode;
-}
+const queryClient = new QueryClient();
 
-export const Providers = ({ children }: ProvidersProps) => {
-  return <Provider>{children}</Provider>;
+export const Providers = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Provider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Provider>
+  );
 };

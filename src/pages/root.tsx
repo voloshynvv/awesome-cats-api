@@ -1,16 +1,15 @@
-import { Outlet } from 'react-router';
-import { Box } from '@chakra-ui/react';
-
-import { Header } from '@/components/header';
+import { Outlet, ScrollRestoration } from 'react-router';
+import { Container } from '@chakra-ui/react';
+import { NavigationBar } from '@/components/navigation-bar/navigation-bar';
 
 export const Root = () => {
   return (
-    <div>
-      <Header />
+    <Container as="main" maxW="2xl" py="4" pb="4.375rem">
+      <NavigationBar />
 
-      <Box>
-        <Outlet />
-      </Box>
-    </div>
+      <Outlet />
+
+      <ScrollRestoration />
+    </Container>
   );
 };
