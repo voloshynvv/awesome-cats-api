@@ -1,10 +1,10 @@
-import { queryOptions } from '@tanstack/react-query';
+import { queryOptions, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { Cat } from '../types';
 
 export const getCatsQueryOptions = (breedIds: string[]) =>
   queryOptions({
-    queryKey: ['cats', breedIds],
+    queryKey: ['cats', { breeds: breedIds }],
     queryFn: async () => {
       const response = await apiClient.get<Cat[]>('/images/search', {
         params: {
@@ -13,7 +13,6 @@ export const getCatsQueryOptions = (breedIds: string[]) =>
           breed_ids: breedIds.join(','),
         },
       });
-
       return response.data;
     },
     staleTime: 1000 * 60 * 5,
@@ -26,6 +25,17 @@ export const getCatQueryOptions = (catId: string) =>
       const response = await apiClient.get<Cat>(`/images/${catId}`);
       return response.data;
     },
-
     staleTime: 1000 * 60 * 5,
   });
+
+export const useCat = (catId: string, breedIds: string[]) => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    ...getCatQueryOptions(catId),
+    initialData: () => {
+      return queryClient.getQueryData(getCatsQueryOptions(breedIds).queryKey)?.find((cat) => cat.id === catId);
+    },
+    enabled: Boolean(catId),
+  });
+};
