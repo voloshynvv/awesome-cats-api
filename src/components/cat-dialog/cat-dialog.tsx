@@ -1,22 +1,47 @@
-import { useCat } from '@/api/queries/cats';
-import { Heading, Image, Text, Box, Button, HStack, Link, DialogCloseTrigger } from '@chakra-ui/react';
-import { DialogRoot, DialogContent } from '../ui/dialog';
-import { CloseButton } from '../ui/close-button';
 import { Link as RouterLink } from 'react-router';
+import { Image, Box, Heading, Text, Link, Button, Spinner } from '@chakra-ui/react';
+import { CloseButton } from '@/components/ui/close-button';
+
+import { DialogRoot, DialogContent, DialogCloseTrigger } from '@/components/ui/dialog';
+
+import { Cat } from '@/api/types';
+import { useAddFavourite } from '@/api/mutation/use-add-favourite';
+import { useDeleteFavourite } from '@/api/mutation/use-delete-favourite';
 
 interface CatDialogProps {
-  catId: string;
-  breedIds: string[];
+  open: boolean;
+  cat: Cat | undefined;
   onClose: () => void;
 }
 
-export const CatDialog = ({ catId, breedIds, onClose }: CatDialogProps) => {
-  const { data: cat, isSuccess } = useCat(catId, breedIds);
+export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
+  const addFavourite = useAddFavourite();
+  const deleteFavourite = useDeleteFavourite();
 
-  if (!cat || !isSuccess) return null;
+  if (!cat) return null;
+
+  const isPending = addFavourite.isPending || deleteFavourite.isPending;
+
+  const favouriteId = cat.favourite?.id;
+
+  const handleClick = () => {
+    if (favouriteId) {
+      deleteFavourite.mutate(favouriteId, {
+        onSuccess: () => {
+          onClose();
+        },
+      });
+    } else {
+      addFavourite.mutate(cat.id, {
+        onSuccess: () => {
+          onClose();
+        },
+      });
+    }
+  };
 
   return (
-    <DialogRoot placement="center" open={Boolean(catId)} onOpenChange={onClose}>
+    <DialogRoot placement="center" open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogCloseTrigger top="0" insetEnd="-12" asChild>
           <CloseButton variant="plain" />
@@ -35,10 +60,10 @@ export const CatDialog = ({ catId, breedIds, onClose }: CatDialogProps) => {
             <RouterLink to={`/breeds/${cat.breeds[0].id}`}>Read more</RouterLink>
           </Link>
 
-          <HStack>
-            <Button>Like</Button>
-            <Button>Dislike</Button>
-          </HStack>
+          <div>
+            <Button onClick={handleClick}>{favouriteId ? 'remove' : 'add'}</Button>
+            {isPending && <Spinner />}
+          </div>
         </Box>
       </DialogContent>
     </DialogRoot>

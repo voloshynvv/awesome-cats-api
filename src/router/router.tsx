@@ -6,6 +6,7 @@ import { Contacts } from '@/pages/contacts';
 import { Root } from '@/pages/root';
 import { Breed } from '@/pages/breed';
 import { Breeds } from '@/pages/breeds';
+import { Favourites } from '@/pages/favourites';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/breeds/:breedId',
         element: <Breed />,
+      },
+      {
+        path: '/favourites',
+        element: <Favourites />,
       },
     ],
   },

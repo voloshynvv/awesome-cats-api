@@ -53,4 +53,7 @@ export interface Cat {
   url: string;
   width: number;
   height: number;
+  favourite?: {
+    id: number;
+  };
 }
