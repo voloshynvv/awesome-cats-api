@@ -1,35 +1,20 @@
-import { ButtonGroup, Grid, Heading, HStack, IconButton } from '@chakra-ui/react';
-import { CatImage } from '@/components/cat-image/cat-image';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { getCatsQueryOptions } from '@/api/queries/cats';
-import { useState } from 'react';
+import { ButtonGroup, Heading, HStack, IconButton } from '@chakra-ui/react';
 import { LayoutGridIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router';
-import { CatDialog } from '@/components/cat-dialog/cat-dialog';
 
 import { AppAsyncSelect } from '@/components/app-async-select/app-async-select';
 import { getBreedsQueryOptions } from '@/api/queries/breeds';
-import { AppDialog } from '@/components/app-dialog/app-dialog';
+import { CatsListing } from '@/components/cats-listing/cats-listing';
 
 export const Home = () => {
-  const [catId, setCatId] = useState<string | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const perPage = searchParams.get('perPage') ?? '2';
-  const breedQueryString = searchParams.get('breed');
-  const breedIds: string[] = [];
+  const perColumn = searchParams.get('perColumn') ?? '2';
+  const breedId = searchParams.get('breed');
+  const breedIds = breedId ? [breedId] : [];
 
-  if (breedQueryString) {
-    breedIds.push(breedQueryString);
-  }
-
-  const { data: cats, isPlaceholderData } = useQuery({
-    ...getCatsQueryOptions(breedIds),
-    placeholderData: keepPreviousData,
-  });
-
-  const handlePerPageClick = (count: string) => {
-    searchParams.set('perPage', count);
+  const handlePerColumnClick = (count: string) => {
+    searchParams.set('perColumn', count);
     setSearchParams(searchParams);
   };
 
@@ -42,8 +27,6 @@ export const Home = () => {
 
     setSearchParams(searchParams);
   };
-
-  const selectedCat = cats?.find((cat) => cat.id === catId);
 
   return (
     <>
@@ -62,31 +45,17 @@ export const Home = () => {
         />
 
         <ButtonGroup variant="outline">
-          <IconButton onClick={() => handlePerPageClick('2')}>
+          <IconButton onClick={() => handlePerColumnClick('2')}>
             <LayoutGridIcon />
           </IconButton>
 
-          <IconButton onClick={() => handlePerPageClick('3')}>
+          <IconButton onClick={() => handlePerColumnClick('3')}>
             <LayoutGridIcon />
           </IconButton>
         </ButtonGroup>
       </HStack>
 
-      <Grid gridTemplateColumns={`repeat(${perPage}, 1fr)`} gap="3" opacity={isPlaceholderData ? '0.5' : '1'}>
-        {cats?.map((cat) => (
-          <CatImage
-            key={cat.id}
-            cat={cat}
-            onClick={() => {
-              if (!isPlaceholderData) {
-                setCatId(cat.id);
-              }
-            }}
-          />
-        ))}
-      </Grid>
-
-      <CatDialog cat={selectedCat} open={Boolean(selectedCat)} onClose={() => setCatId(null)} />
+      <CatsListing perColumn={perColumn} breedIds={breedIds} />
     </>
   );
 };

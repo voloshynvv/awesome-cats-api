@@ -18,7 +18,7 @@ export const NavigationBar = () => {
       <List.Root variant="plain" justifyContent="center" flexDirection="row" color="black" gap="3">
         <List.Item>
           <Button unstyled asChild p="2" pl="4">
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">Gallery</NavLink>
           </Button>
         </List.Item>
 
