@@ -1,4 +1,4 @@
-import { ButtonGroup, Heading, HStack, IconButton } from '@chakra-ui/react';
+import { ButtonGroup, Heading, HStack, IconButton, useStatStyles } from '@chakra-ui/react';
 import { LayoutGridIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router';
 
@@ -44,7 +44,7 @@ export const Home = () => {
           itemToString={(breed) => breed.name}
         />
 
-        <ButtonGroup variant="outline">
+        <ButtonGroup variant="outline" hideBelow="md">
           <IconButton onClick={() => handlePerColumnClick('2')}>
             <LayoutGridIcon />
           </IconButton>

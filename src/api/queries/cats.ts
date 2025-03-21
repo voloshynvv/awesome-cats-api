@@ -1,9 +1,8 @@
 import { infiniteQueryOptions, keepPreviousData, queryOptions } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
-import { Cat } from '../types';
+import { Cat, FavouriteCat } from '../types';
 
 export const catsKey = ['cats'];
-
 export const CATS_QUERY_LIMIT = 18;
 
 const getCats = async ({ page = 1, breedIds = [] }: { page: number; breedIds: string[] }): Promise<Cat[]> => {
@@ -14,15 +13,24 @@ const getCats = async ({ page = 1, breedIds = [] }: { page: number; breedIds: st
       breed_ids: breedIds.join(','),
       sub_id: 'my-user-id',
       page,
-      order: 'ASC',
     },
   });
-
   return response.data;
 };
 
-export const getCatsInfiniteQueryOptions = (breedIds: string[] = []) =>
-  infiniteQueryOptions({
+const getFavourites = async (page = 1): Promise<FavouriteCat[]> => {
+  const response = await apiClient.get('/favourites', {
+    params: {
+      sub_id: 'my-user-id',
+      page,
+      limit: CATS_QUERY_LIMIT,
+    },
+  });
+  return response.data;
+};
+
+export const getCatsInfiniteQueryOptions = (breedIds: string[] = []) => {
+  return infiniteQueryOptions({
     queryKey: ['cats', { breeds: breedIds }],
     queryFn: ({ pageParam }) => getCats({ page: pageParam, breedIds }),
     initialPageParam: 0,
@@ -36,16 +44,18 @@ export const getCatsInfiniteQueryOptions = (breedIds: string[] = []) =>
     staleTime: 1000 * 60 * 5,
     placeholderData: keepPreviousData,
   });
+};
 
 export const getFavouritesQueryOptions = () =>
-  queryOptions({
-    queryKey: ['favourites'],
-    queryFn: async () => {
-      const response = await apiClient.get('/favourites', {
-        params: {
-          sub_id: 'my-user-id',
-        },
-      });
-      return response.data;
+  infiniteQueryOptions({
+    queryKey: ['cats', 'favourites'],
+    queryFn: ({ pageParam }) => getFavourites(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      if (lastPage.length === 0) {
+        return undefined;
+      }
+
+      return lastPageParam + 1;
     },
   });

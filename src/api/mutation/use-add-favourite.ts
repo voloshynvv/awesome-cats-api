@@ -7,10 +7,11 @@ export const useAddFavourite = () => {
 
   return useMutation({
     mutationFn: async (catId: string) => {
-      return apiClient.post('/favourites', {
+      const response = await apiClient.post('/favourites', {
         image_id: catId,
         sub_id: 'my-user-id',
       });
+      return response.data;
     },
     onSuccess: () => {
       return queryClient.invalidateQueries({ queryKey: catsKey });

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { createListCollection, SelectRootProps, Spinner, Text, Box, CollectionItem } from '@chakra-ui/react';
 import { SelectContent, SelectRoot, SelectItem, SelectTrigger, SelectValueText } from '@/components/ui/select';

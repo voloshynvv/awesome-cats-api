@@ -9,7 +9,7 @@ export const getBreedsQueryOptions = () =>
       const response = await apiClient.get<Breed[]>('/breeds');
       return response.data;
     },
-    // up-to-date, no need for a background refetch
+    // always fresh, no need for a background refetch
     staleTime: Infinity,
   });
 
@@ -20,6 +20,6 @@ export const getBreedQueryOptions = (breedId: string) =>
       const response = await apiClient.get<Breed>(`/breeds/${breedId}`);
       return response.data;
     },
-    // up-to-date, no need for a background refetch
+    // always fresh, no need for a background refetch
     staleTime: Infinity,
   });
