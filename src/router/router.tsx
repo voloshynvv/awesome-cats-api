@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouterProvider as Router } from 'react-router';
 
 import { Home } from '@/pages/home';
-import { About } from '@/pages/about';
-import { Contacts } from '@/pages/contacts';
 import { Root } from '@/pages/root';
 import { Breed } from '@/pages/breed';
 import { Favourites } from '@/pages/favourites';
@@ -16,14 +14,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-      },
-      {
-        path: '/about',
-        element: <About />,
-      },
-      {
-        path: '/contacts',
-        element: <Contacts />,
       },
       {
         path: '/breeds',
