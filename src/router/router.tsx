@@ -5,8 +5,8 @@ import { About } from '@/pages/about';
 import { Contacts } from '@/pages/contacts';
 import { Root } from '@/pages/root';
 import { Breed } from '@/pages/breed';
-import { Breeds } from '@/pages/breeds';
 import { Favourites } from '@/pages/favourites';
+import { Breeds } from '@/pages/breeds/breeds';
 
 const router = createBrowserRouter([
   {
