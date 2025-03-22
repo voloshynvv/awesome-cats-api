@@ -90,4 +90,16 @@ describe('SearchPopover', () => {
 
     expect(input).toHaveValue(value);
   });
+
+  it('resets input value on close', async () => {
+    const { trigger, input } = renderComponent();
+
+    await userEvent.click(trigger);
+    await userEvent.type(input, 'breed');
+
+    await userEvent.click(trigger);
+    await userEvent.click(trigger);
+
+    expect(input).toHaveValue('');
+  });
 });

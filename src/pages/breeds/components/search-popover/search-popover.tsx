@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { SearchIcon, XIcon } from 'lucide-react';
-import { IconButton, PopoverOpenChangeDetails, Box, HStack, Input, Button, VisuallyHidden } from '@chakra-ui/react';
+import {
+  IconButton,
+  PopoverOpenChangeDetails,
+  Box,
+  HStack,
+  Input,
+  Button,
+  VisuallyHidden,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 
 import { PopoverContent, PopoverRoot, PopoverTrigger } from '@/components/ui/popover';
 
@@ -12,6 +21,8 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
+  const placement = useBreakpointValue({ base: 'bottom', sm: 'right' });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -22,9 +33,7 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
     onSubmit(value);
   };
 
-  const handleOpenChange = (e: PopoverOpenChangeDetails) => {
-    const { open } = e;
-
+  const handleOpenChange = ({ open }: PopoverOpenChangeDetails) => {
     if (!open) {
       onSubmit('');
     }
@@ -34,10 +43,12 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
 
   return (
     <PopoverRoot
+      key={placement}
       closeOnInteractOutside={false}
       open={open}
       onOpenChange={handleOpenChange}
-      positioning={{ placement: 'right' }}
+      positioning={{ placement }} // TODO: FIX ts error
+      onExitComplete={() => setValue('')}
     >
       <PopoverTrigger asChild>
         <IconButton
@@ -56,7 +67,7 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
         </IconButton>
       </PopoverTrigger>
 
-      <PopoverContent css={{ '--popover-bg': 'tranparent' }}>
+      <PopoverContent css={{ '--popover-bg': 'tranparent' }} boxShadow="none">
         <HStack as="form" onSubmit={handleSubmit}>
           <Box as="label" w="full">
             <VisuallyHidden>Breed</VisuallyHidden>
