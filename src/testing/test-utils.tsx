@@ -1,18 +1,31 @@
 import { render, RenderOptions } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router';
 import { Provider } from '@/components/ui/provider';
 
-interface Options extends Omit<RenderOptions, 'wrapper'> {
+interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
   initialEntries?: string;
 }
 
-export const renderWithProviders = (ui: React.ReactNode, options: Options = {}) => {
+const createTestQueryClient = () => {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+    },
+  });
+};
+
+export const renderWithProviders = (ui: React.ReactNode, options: CustomRenderOptions = {}) => {
   const { initialEntries = '/', ...rtlOptions } = options;
+
+  const queryClient = createTestQueryClient();
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
     return (
       <Provider>
-        <MemoryRouter initialEntries={[initialEntries]}>{children}</MemoryRouter>
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter initialEntries={[initialEntries]}>{children}</MemoryRouter>
+        </QueryClientProvider>
       </Provider>
     );
   };

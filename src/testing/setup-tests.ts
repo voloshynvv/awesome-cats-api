@@ -1,7 +1,22 @@
 import '@testing-library/jest-dom/vitest';
-import { vi } from 'vitest';
+import { vi, beforeAll, afterEach, afterAll } from 'vitest';
 import { JSDOM } from 'jsdom';
 import ResizeObserver from 'resize-observer-polyfill';
+import { server } from './mocks/node';
+
+/* -- MSW -- */
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+server.events.on('request:start', ({ request }) => {
+  console.log('MSW intercepted:', request.method, request.url);
+});
+
+/* -- MSW -- */
+
+/* -- Chakra -- */
 
 const { window } = new JSDOM();
 
@@ -54,3 +69,5 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 Object.assign(global, { window, document: window.document });
+
+/* -- Chakra -- */
