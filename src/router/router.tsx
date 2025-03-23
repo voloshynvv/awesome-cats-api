@@ -2,8 +2,8 @@ import { createBrowserRouter, RouterProvider as Router } from 'react-router';
 
 import { Home } from '@/pages/home';
 import { Root } from '@/pages/root';
-import { Breed } from '@/pages/breed';
 import { Favourites } from '@/pages/favourites';
+import { Breed } from '@/pages/breed/breed';
 import { Breeds } from '@/pages/breeds/breeds';
 
 const router = createBrowserRouter([

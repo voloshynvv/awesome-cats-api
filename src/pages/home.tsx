@@ -3,8 +3,8 @@ import { LayoutGridIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router';
 
 import { AppAsyncSelect } from '@/components/app-async-select/app-async-select';
-import { getBreedsQueryOptions } from '@/api/queries/breeds';
 import { CatsListing } from '@/components/cats-listing/cats-listing';
+import { getBreedsQueryOptions } from '@/api/breeds/get-breeds';
 
 export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
