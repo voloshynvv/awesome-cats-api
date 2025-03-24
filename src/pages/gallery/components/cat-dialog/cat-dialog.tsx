@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router';
-import { Image, Box, Heading, Text, Link, Button, Spinner, IconButton } from '@chakra-ui/react';
+import { Image, Box, Heading, Text, Link, Spinner, IconButton } from '@chakra-ui/react';
 import { LuHeart, LuHeartCrack } from 'react-icons/lu';
 
 import { DialogRoot, DialogContent, DialogCloseTrigger } from '@/components/ui/dialog';

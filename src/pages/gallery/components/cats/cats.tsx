@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Spinner, Grid, Flex } from '@chakra-ui/react';
+import { Spinner, Grid } from '@chakra-ui/react';
 
 import { CatImage } from './cat-image';
 import { CatDialog } from '../cat-dialog/cat-dialog';
-import { InfiniteListing } from '@/components/infinite-listing/infinite-listing';
 import { Button } from '@/components/ui/button';
 
 import { getCatsInfiniteQueryOptions } from '@/api/cats/get-cats';
@@ -17,12 +16,6 @@ export const Cats = ({ breedIds }: CatsProps) => {
   const [catId, setCatId] = useState<string | null>(null);
 
   const catsQuery = useInfiniteQuery(getCatsInfiniteQueryOptions(breedIds));
-
-  const handleCatClick = (catId: string) => {
-    if (!catsQuery.isFetchingNextPage) {
-      setCatId(catId);
-    }
-  };
 
   if (catsQuery.isPending) {
     return <Spinner color="fg.muted" />;
