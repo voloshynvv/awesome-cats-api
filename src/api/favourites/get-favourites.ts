@@ -15,7 +15,7 @@ const getFavourites = async (page: number): Promise<FavouriteCat[]> => {
 
 export const getFavouritesQueryOptions = () =>
   infiniteQueryOptions({
-    queryKey: ['favourites'],
+    queryKey: ['cats', 'favourites'],
     queryFn: ({ pageParam }) => getFavourites(pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _, lastPageParam) => {

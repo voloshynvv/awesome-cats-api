@@ -1,20 +1,42 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
-import { getFavouritesQueryOptions } from './get-favourites';
+import { getCatsInfiniteQueryOptions } from '../cats/get-cats';
+
+const addFavourite = async (catId: string) => {
+  const response = await apiClient.post('/favourites', {
+    image_id: catId,
+    sub_id: 'my-user-id',
+  });
+  return response.data;
+};
 
 export const useAddFavourite = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (catId: string) => {
-      const response = await apiClient.post('/favourites', {
-        image_id: catId,
-        sub_id: 'my-user-id',
+    mutationFn: addFavourite,
+    onSuccess: (response, catId) => {
+      // queryClient.invalidateQueries does not fit here because images are returned randomly
+      // To preserve the current list state, it's better to update the cache manually
+
+      queryClient.setQueryData(getCatsInfiniteQueryOptions().queryKey, (oldData) => {
+        if (!oldData) return oldData;
+
+        const newPages = oldData?.pages.map((page) => {
+          return page.map((cat) => {
+            if (cat.id === catId) {
+              return { ...cat, favourite: { id: response.id } };
+            }
+
+            return cat;
+          });
+        });
+
+        return {
+          ...oldData,
+          pages: newPages,
+        };
       });
-      return response.data;
-    },
-    onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: getFavouritesQueryOptions().queryKey });
     },
   });
 };

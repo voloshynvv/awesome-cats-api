@@ -1,16 +1,41 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
-import { getFavouritesQueryOptions } from './get-favourites';
+import { getCatsInfiniteQueryOptions } from '../cats/get-cats';
+
+const deleteFavourite = async (favouriteId: number) => {
+  const response = await apiClient.delete(`/favourites/${favouriteId}`);
+  return response.data;
+};
 
 export const useDeleteFavourite = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (favouriteId: number) => {
-      return apiClient.delete(`/favourites/${favouriteId}`);
-    },
-    onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: getFavouritesQueryOptions().queryKey });
+    mutationFn: deleteFavourite,
+    onSuccess: (_, favouriteId) => {
+      // queryClient.invalidateQueries does not fit here because images are returned randomly
+      // To preserve the current list state, it's better to update the cache manually
+
+      queryClient.setQueryData(getCatsInfiniteQueryOptions().queryKey, (oldData) => {
+        if (!oldData) return oldData;
+
+        const newPages = oldData?.pages.map((page) => {
+          return page.map((cat) => {
+            if (cat.favourite?.id === favouriteId) {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { favourite, ...newCat } = cat;
+              return newCat;
+            }
+
+            return cat;
+          });
+        });
+
+        return {
+          ...oldData,
+          pages: newPages,
+        };
+      });
     },
   });
 };
