@@ -1,20 +1,15 @@
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Box, HStack, Spinner, Text } from '@chakra-ui/react';
+import { Box, Spinner, Text } from '@chakra-ui/react';
 
 import { InfiniteListing } from '@/components/infinite-listing/infinite-listing';
 import { FavouriteImage } from './favourite-image';
-import { CustomCursor } from './custom-cursor';
 import { EmptyScreen } from '@/components/ui/empty-screen';
 
-import { useMousePosition } from '@/hooks/use-mouse-position';
 import { getFavouritesQueryOptions } from '@/api/favourites/get-favourites';
 import { useDeleteFavourite } from '@/api/favourites/delete-favourite';
 
 export const Favourites = () => {
-  const [activeId, setActiveId] = useState<number | null>(null);
-  const position = useMousePosition();
-
   const favouritesQuery = useInfiniteQuery(getFavouritesQueryOptions());
   const deleteFavouriteMutation = useDeleteFavourite();
 
@@ -26,6 +21,8 @@ export const Favourites = () => {
     return <p>error</p>;
   }
 
+  const showLoader = favouritesQuery.isStale || deleteFavouriteMutation.isPending;
+
   const favouriteCats = favouritesQuery.data.pages.flat();
 
   if (!favouriteCats.length) {
@@ -34,13 +31,9 @@ export const Favourites = () => {
 
   return (
     <Box>
-      <HStack mb="2" gap="4">
-        <Text fontStyle="italic" color="gray.200">
-          Oops! Be careful — clicking on the cat image will remove it instantly <span role="img">🐱💨</span>
-        </Text>
-
-        {deleteFavouriteMutation.isPending && <Spinner color="fg.muted" />}
-      </HStack>
+      <Text mb="2" fontStyle="italic" color="gray.200">
+        Oops! Be careful — clicking on the cat image will remove it instantly <span role="img">🐱💨</span>
+      </Text>
 
       <InfiniteListing
         entities={favouriteCats}
@@ -51,15 +44,16 @@ export const Favourites = () => {
           <FavouriteImage
             key={cat.id}
             url={cat.image.url}
-            onMouseEnter={() => setActiveId(cat.id)}
-            onMouseOut={() => setActiveId(null)}
-            isPending={deleteFavouriteMutation.isPending}
-            onClick={() => deleteFavouriteMutation.mutate(cat.id)}
+            onClick={() => {
+              if (!deleteFavouriteMutation.isPending) {
+                deleteFavouriteMutation.mutate(cat.id);
+              }
+            }}
           />
         )}
       />
 
-      <CustomCursor x={position.x} y={position.y} active={Boolean(activeId)} />
+      {showLoader && <Spinner size="md" position="fixed" left="6" bottom="6" color="fg.muted" />}
     </Box>
   );
 };

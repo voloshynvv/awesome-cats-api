@@ -20,7 +20,7 @@ export const InfiniteListing = <T,>({
 }: InfiniteListingProps<T>) => {
   return (
     <>
-      <Grid gridTemplateColumns="repeat(2, 1fr)" gap="4">
+      <Grid gridTemplateColumns={{ sm: 'repeat(2, 1fr)' }} gap="4">
         {entities.map(render)}
       </Grid>
 
@@ -31,7 +31,7 @@ export const InfiniteListing = <T,>({
           disabled={isFetchingNextPage}
           display="flex"
           gap="2"
-          mt="6"
+          mt="4"
           mx="auto"
         >
           {buttonName}

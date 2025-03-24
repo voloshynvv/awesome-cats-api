@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Box, HStack, Spinner, Text } from '@chakra-ui/react';
+import { Box, Spinner, Text } from '@chakra-ui/react';
 
 import { EmptyScreen } from '@/components/ui/empty-screen';
 import { InfiniteListing } from '@/components/infinite-listing/infinite-listing';
@@ -33,13 +33,9 @@ export const Uploads = () => {
 
   return (
     <Box>
-      <HStack mb="2" gap="4">
-        <Text fontStyle="italic" color="gray.200">
-          Oops! Be careful — clicking on the cat image will remove it instantly <span role="img">🐱💨</span>
-        </Text>
-
-        {deleteImageMutation.isPending && <Spinner color="fg.muted" />}
-      </HStack>
+      <Text mb="2" fontStyle="italic" color="gray.200">
+        Oops! Be careful — clicking on the cat image will remove it instantly <span role="img">🐱💨</span>
+      </Text>
 
       <InfiniteListing
         isFetchingNextPage={uploadsQuery.isFetchingNextPage}
@@ -49,13 +45,14 @@ export const Uploads = () => {
         render={(cat) => (
           <UploadedImage
             key={cat.id}
-            id={cat.id}
             url={cat.url}
             isPending={deleteImageMutation.isPending}
             onClick={() => deleteImageMutation.mutate(cat.id)}
           />
         )}
       />
+
+      {deleteImageMutation.isPending && <Spinner size="md" position="fixed" left="6" bottom="6" color="fg.muted" />}
     </Box>
   );
 };

@@ -1,5 +1,15 @@
 import { Link as RouterLink } from 'react-router';
-import { Image, Box, Heading, Text, Link, Spinner, IconButton } from '@chakra-ui/react';
+import {
+  Image,
+  Box,
+  Heading,
+  Text,
+  Link,
+  Spinner,
+  IconButton,
+  useBreakpointValue,
+  DialogRootProps,
+} from '@chakra-ui/react';
 import { LuHeart, LuHeartCrack } from 'react-icons/lu';
 
 import { DialogRoot, DialogContent, DialogCloseTrigger } from '@/components/ui/dialog';
@@ -7,10 +17,11 @@ import { DialogRoot, DialogContent, DialogCloseTrigger } from '@/components/ui/d
 import { useAddFavourite } from '@/api/favourites/add-favourite';
 import { useDeleteFavourite } from '@/api/favourites/delete-favourite';
 import { Cat } from '@/api/types';
+import { Button } from '@/components/ui/button';
 
 interface CatDialogProps {
   open: boolean;
-  cat: Cat | undefined;
+  cat: Cat;
   onClose: () => void;
 }
 
@@ -18,7 +29,7 @@ export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
   const addFavourite = useAddFavourite();
   const deleteFavourite = useDeleteFavourite();
 
-  if (!cat) return null;
+  const dialogSize = useBreakpointValue({ base: 'full', sm: 'sm' }) as DialogRootProps['size'];
 
   const isPending = addFavourite.isPending || deleteFavourite.isPending;
 
@@ -32,7 +43,7 @@ export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
         },
       });
     } else {
-      addFavourite.mutate(cat.id, {
+      addFavourite.mutate(cat?.id ?? '', {
         onSuccess: () => {
           onClose();
         },
@@ -41,13 +52,20 @@ export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
   };
 
   return (
-    <DialogRoot placement="center" open={open} onOpenChange={onClose}>
+    <DialogRoot size={dialogSize} placement={'center'} open={open} onOpenChange={onClose}>
       <DialogContent>
-        <DialogCloseTrigger top="0" insetEnd="-12" />
+        <DialogCloseTrigger
+          top="2"
+          variant={{ base: 'surface', md: 'ghost' }}
+          md={{
+            top: '0',
+            insetEnd: '-12',
+          }}
+        />
 
         <Image src={cat.url} alt="cat image" aspectRatio="landscape" />
 
-        <Box p="4" spaceY="4">
+        <Box p="5" spaceY="4">
           <Heading lineHeight="1" as="h2">
             {cat.breeds[0].name}
           </Heading>

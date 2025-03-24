@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { getCatsInfiniteQueryOptions } from '../cats/get-cats';
+import { getFavouritesQueryOptions } from './get-favourites';
 
 interface DeleteFavouriteResponse {
   message: string;
@@ -40,6 +41,8 @@ export const useDeleteFavourite = () => {
           pages: newPages,
         };
       });
+
+      return queryClient.invalidateQueries({ queryKey: getFavouritesQueryOptions().queryKey });
     },
   });
 };

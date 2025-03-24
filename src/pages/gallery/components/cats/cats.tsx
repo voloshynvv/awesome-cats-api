@@ -7,6 +7,7 @@ import { CatDialog } from '../cat-dialog/cat-dialog';
 import { Button } from '@/components/ui/button';
 
 import { getCatsInfiniteQueryOptions } from '@/api/cats/get-cats';
+import { InfiniteListing } from '@/components/infinite-listing/infinite-listing';
 
 interface CatsProps {
   breedIds: string[];
@@ -30,24 +31,17 @@ export const Cats = ({ breedIds }: CatsProps) => {
 
   return (
     <>
-      <Grid gridTemplateColumns={{ sm: 'repeat(2, 1fr)' }} gap="4">
-        {cats.map((cat) => (
+      <InfiniteListing
+        entities={cats}
+        hasNextPage={catsQuery.hasNextPage}
+        isFetchingNextPage={catsQuery.isFetchingNextPage}
+        onNextPageClick={() => catsQuery.fetchNextPage()}
+        render={(cat) => (
           <CatImage key={cat.id} src={cat.url} isLiked={Boolean(cat.favourite?.id)} onClick={() => setCatId(cat.id)} />
-        ))}
-      </Grid>
+        )}
+      />
 
-      <Button
-        onClick={() => catsQuery.fetchNextPage()}
-        disabled={!catsQuery.hasNextPage || catsQuery.isFetchingNextPage}
-        loading={catsQuery.isFetchingNextPage}
-        mx="auto"
-        display="flex"
-        mt="4"
-      >
-        Load More
-      </Button>
-
-      <CatDialog cat={selectedCat} onClose={() => setCatId(null)} open={Boolean(catId)} />
+      {selectedCat && <CatDialog cat={selectedCat} onClose={() => setCatId(null)} open={Boolean(catId)} />}
     </>
   );
 };

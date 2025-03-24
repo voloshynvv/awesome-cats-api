@@ -1,14 +1,12 @@
-import { infiniteQueryOptions, keepPreviousData } from '@tanstack/react-query';
+import { infiniteQueryOptions } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { Cat } from '../types';
-
-export const catsKey = ['cats'];
-export const CATS_QUERY_LIMIT = 18;
+import { LIMIT } from '../constants';
 
 const getCats = async (page: number, breedIds: string[]): Promise<Cat[]> => {
   const response = await apiClient.get('/images/search', {
     params: {
-      limit: CATS_QUERY_LIMIT,
+      limit: LIMIT,
       has_breeds: 1,
       breed_ids: breedIds.join(','),
       sub_id: 'my-user-id',
@@ -24,13 +22,11 @@ export const getCatsInfiniteQueryOptions = (breedIds: string[] = []) => {
     queryFn: ({ pageParam }) => getCats(pageParam, breedIds),
     initialPageParam: 0,
     getNextPageParam: (lastPage, _, lastPageParam) => {
-      if (lastPage.length === 0) {
+      if (lastPage.length < LIMIT) {
         return undefined;
       }
 
       return lastPageParam + 1;
     },
-    staleTime: 1000 * 60 * 5,
-    placeholderData: keepPreviousData,
   });
 };
