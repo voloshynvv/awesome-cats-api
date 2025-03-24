@@ -1,12 +1,11 @@
 import { Button, Image } from '@chakra-ui/react';
-import { Cat } from '@/api/types';
 
 interface CatImageProps {
-  cat: Cat;
+  url: string;
   onClick: () => void;
 }
 
-export const CatImage = ({ cat, onClick }: CatImageProps) => {
+export const CatImage = ({ url, onClick }: CatImageProps) => {
   return (
     <Button unstyled onClick={onClick} className="group" rounded="lg" overflow="hidden" cursor="pointer">
       <Image
@@ -15,8 +14,8 @@ export const CatImage = ({ cat, onClick }: CatImageProps) => {
         transition="scale 250ms ease"
         w="full"
         aspectRatio="landscape"
-        src={cat.url}
-        alt={cat.breeds[0].name}
+        src={url}
+        alt="cat image"
       />
     </Button>
   );

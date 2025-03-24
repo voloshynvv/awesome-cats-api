@@ -30,7 +30,7 @@ export const NavigationBar = () => {
 
         <List.Item>
           <Button unstyled asChild p="2">
-            <NavLink to="/favourites">Favorites</NavLink>
+            <NavLink to="/dashboard">Dashboard</NavLink>
           </Button>
         </List.Item>
       </List.Root>

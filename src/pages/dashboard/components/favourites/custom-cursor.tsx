@@ -6,7 +6,7 @@ interface CursorProps {
   active: boolean;
 }
 
-export const Cursor = ({ x, y, active }: CursorProps) => {
+export const CustomCursor = ({ x, y, active }: CursorProps) => {
   return (
     <Box
       w="fit"

@@ -1,12 +1,13 @@
-import { ButtonGroup, Heading, HStack, IconButton, useStatStyles } from '@chakra-ui/react';
-import { LayoutGridIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router';
+import { LayoutGridIcon } from 'lucide-react';
+import { ButtonGroup, Heading, HStack, IconButton } from '@chakra-ui/react';
 
 import { AppAsyncSelect } from '@/components/app-async-select/app-async-select';
-import { CatsListing } from '@/components/cats-listing/cats-listing';
+import { CatsListing } from './components/cats/cats-listing';
+
 import { getBreedsQueryOptions } from '@/api/breeds/get-breeds';
 
-export const Home = () => {
+export const Gallery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const perColumn = searchParams.get('perColumn') ?? '2';

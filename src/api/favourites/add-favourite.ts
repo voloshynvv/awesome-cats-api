@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
-import { catsKey } from '../queries/cats';
+import { getFavouritesQueryOptions } from './get-favourites';
 
 export const useAddFavourite = () => {
   const queryClient = useQueryClient();
@@ -14,7 +14,7 @@ export const useAddFavourite = () => {
       return response.data;
     },
     onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: catsKey });
+      return queryClient.invalidateQueries({ queryKey: getFavouritesQueryOptions().queryKey });
     },
   });
 };

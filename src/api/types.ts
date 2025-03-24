@@ -69,3 +69,15 @@ export interface FavouriteCat {
     url: string;
   };
 }
+
+export interface UploadedCat {
+  breeds: Breed[];
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+  sub_id: string;
+  created_at: string;
+  original_filename: string;
+  breed_ids: null;
+}
