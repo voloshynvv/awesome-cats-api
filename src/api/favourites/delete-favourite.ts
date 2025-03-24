@@ -2,7 +2,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { getCatsInfiniteQueryOptions } from '../cats/get-cats';
 
-const deleteFavourite = async (favouriteId: number) => {
+interface DeleteFavouriteResponse {
+  message: string;
+}
+
+const deleteFavourite = async (favouriteId: number): Promise<DeleteFavouriteResponse> => {
   const response = await apiClient.delete(`/favourites/${favouriteId}`);
   return response.data;
 };

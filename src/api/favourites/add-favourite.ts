@@ -2,7 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { getCatsInfiniteQueryOptions } from '../cats/get-cats';
 
-const addFavourite = async (catId: string) => {
+interface AddFavouriteResponse {
+  message: string;
+  id: number;
+}
+
+const addFavourite = async (catId: string): Promise<AddFavouriteResponse> => {
   const response = await apiClient.post('/favourites', {
     image_id: catId,
     sub_id: 'my-user-id',

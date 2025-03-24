@@ -1,23 +1,16 @@
 import { useSearchParams } from 'react-router';
-import { LayoutGridIcon } from 'lucide-react';
-import { ButtonGroup, Heading, HStack, IconButton } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
+import { Cats } from './components/cats/cats';
 import { AppAsyncSelect } from '@/components/app-async-select/app-async-select';
-import { CatsListing } from './components/cats/cats-listing';
 
 import { getBreedsQueryOptions } from '@/api/breeds/get-breeds';
 
 export const Gallery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const perColumn = searchParams.get('perColumn') ?? '2';
   const breedId = searchParams.get('breed');
   const breedIds = breedId ? [breedId] : [];
-
-  const handlePerColumnClick = (count: string) => {
-    searchParams.set('perColumn', count);
-    setSearchParams(searchParams);
-  };
 
   const handleSelectValueChange = (breeds: string[]) => {
     if (breeds.length > 0) {
@@ -35,7 +28,7 @@ export const Gallery = () => {
         Explore <span role="img">✨</span>
       </Heading>
 
-      <HStack mb="2">
+      <Box mb="4">
         <AppAsyncSelect
           placeholder="Pick a breed"
           value={breedIds}
@@ -44,19 +37,9 @@ export const Gallery = () => {
           itemToValue={(breed) => breed.id}
           itemToString={(breed) => breed.name}
         />
+      </Box>
 
-        <ButtonGroup variant="outline" hideBelow="md">
-          <IconButton onClick={() => handlePerColumnClick('2')}>
-            <LayoutGridIcon />
-          </IconButton>
-
-          <IconButton onClick={() => handlePerColumnClick('3')}>
-            <LayoutGridIcon />
-          </IconButton>
-        </ButtonGroup>
-      </HStack>
-
-      <CatsListing perColumn={perColumn} breedIds={breedIds} />
+      <Cats breedIds={breedIds} />
     </>
   );
 };
