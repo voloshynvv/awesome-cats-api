@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Box, Spinner, Text } from '@chakra-ui/react';
 

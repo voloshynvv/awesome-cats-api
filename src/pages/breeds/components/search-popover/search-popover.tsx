@@ -21,7 +21,7 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
-  const placement = useBreakpointValue({ base: 'bottom', sm: 'right' });
+  const placement = useBreakpointValue({ base: 'bottom', sm: 'right' }) as 'bottom' | 'right';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
       closeOnInteractOutside={false}
       open={open}
       onOpenChange={handleOpenChange}
-      positioning={{ placement }} // TODO: FIX ts error
+      positioning={{ placement }}
       onExitComplete={() => setValue('')}
     >
       <PopoverTrigger asChild>

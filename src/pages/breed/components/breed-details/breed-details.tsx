@@ -1,4 +1,4 @@
-import { Box, Image, Heading, Text, Badge, List, Skeleton, Spinner, Center, Flex } from '@chakra-ui/react';
+import { Box, Heading, Text, Badge, List, Skeleton, Spinner, Flex } from '@chakra-ui/react';
 
 import { useBreed } from '@/api/breeds/get-breed';
 

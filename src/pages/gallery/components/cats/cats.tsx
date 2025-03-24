@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Spinner, Grid } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
 
 import { CatImage } from './cat-image';
 import { CatDialog } from '../cat-dialog/cat-dialog';
-import { Button } from '@/components/ui/button';
 
 import { getCatsInfiniteQueryOptions } from '@/api/cats/get-cats';
 import { InfiniteListing } from '@/components/infinite-listing/infinite-listing';

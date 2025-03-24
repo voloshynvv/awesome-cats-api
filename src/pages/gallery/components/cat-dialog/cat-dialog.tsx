@@ -17,7 +17,6 @@ import { DialogRoot, DialogContent, DialogCloseTrigger } from '@/components/ui/d
 import { useAddFavourite } from '@/api/favourites/add-favourite';
 import { useDeleteFavourite } from '@/api/favourites/delete-favourite';
 import { Cat } from '@/api/types';
-import { Button } from '@/components/ui/button';
 
 interface CatDialogProps {
   open: boolean;
