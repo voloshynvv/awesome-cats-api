@@ -39,7 +39,7 @@ export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
   };
 
   return (
-    <DialogRoot size="sm" placement="center" open={open} onOpenChange={onClose}>
+    <DialogRoot size="sm" placement={{ base: 'top', lg: 'center' }} open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogCloseTrigger
           variant="surface"
@@ -53,7 +53,7 @@ export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
 
         <Box p="5" spaceY="4">
           <Heading lineHeight="1" as="h2">
-            {cat.breeds[0].name}
+            {cat.breeds[0]?.name}
           </Heading>
 
           <Text lineClamp="2">{cat.breeds[0].description}</Text>

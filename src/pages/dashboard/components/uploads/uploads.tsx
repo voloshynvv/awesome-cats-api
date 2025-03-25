@@ -12,7 +12,7 @@ export const Uploads = () => {
   const uploadsQuery = useInfiniteQuery(getUploadsInfiniteQueryOptions());
   const deleteImageMutation = useDeleteImage();
 
-  if (uploadsQuery.isPending) {
+  if (uploadsQuery.isPending || uploadsQuery.isStale) {
     return <Spinner color="fg.muted" />;
   }
 
@@ -46,16 +46,11 @@ export const Uploads = () => {
           <ImageWithCursor
             imageSrc={cat.url}
             source="uploaded"
-            onClick={() => {
-              if (!deleteImageMutation.isPending) {
-                deleteImageMutation.mutate(cat.id);
-              }
-            }}
+            onClick={() => deleteImageMutation.mutate(cat.id)}
+            isPending={deleteImageMutation.isPending && deleteImageMutation.variables === cat.id}
           />
         )}
       />
-
-      {deleteImageMutation.isPending && <Spinner size="md" position="fixed" left="6" bottom="6" color="fg.muted" />}
     </Box>
   );
 };

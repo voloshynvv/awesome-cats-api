@@ -2,8 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { getUploadsInfiniteQueryOptions } from './get-uploads';
 
-const deleteImage = async (imageId: string) => {
-  return apiClient.delete(`/images/${imageId}`);
+interface DeleteImageResponse {
+  message: string;
+}
+
+const deleteImage = async (imageId: string): Promise<DeleteImageResponse> => {
+  const response = await apiClient.delete(`/images/${imageId}`);
+  return response.data;
 };
 
 export const useDeleteImage = () => {

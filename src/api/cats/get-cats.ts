@@ -2,6 +2,7 @@ import { infiniteQueryOptions, keepPreviousData } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { Cat } from '../types';
 import { LIMIT } from '../constants';
+import { sessionId } from '../user-session';
 
 const getCats = async (page: number, breedIds: string[]): Promise<Cat[]> => {
   const response = await apiClient.get('/images/search', {
@@ -9,7 +10,7 @@ const getCats = async (page: number, breedIds: string[]): Promise<Cat[]> => {
       limit: LIMIT,
       has_breeds: 1,
       breed_ids: breedIds.join(','),
-      sub_id: 'my-user-id',
+      sub_id: sessionId,
       page,
     },
   });

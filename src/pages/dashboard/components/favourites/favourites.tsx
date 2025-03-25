@@ -12,15 +12,13 @@ export const Favourites = () => {
   const favouritesQuery = useInfiniteQuery(getFavouritesQueryOptions());
   const deleteFavouriteMutation = useDeleteFavourite();
 
-  if (favouritesQuery.isPending) {
+  if (favouritesQuery.isPending || favouritesQuery.isStale) {
     return <Spinner color="fg.muted" />;
   }
 
   if (favouritesQuery.isError) {
     return <p>error</p>;
   }
-
-  const showLoader = favouritesQuery.isStale || deleteFavouriteMutation.isPending;
 
   const favouriteCats = favouritesQuery.data.pages.flat();
 
@@ -44,16 +42,11 @@ export const Favourites = () => {
             key={cat.id}
             imageSrc={cat.image.url}
             source="favourite"
-            onClick={() => {
-              if (!deleteFavouriteMutation.isPending) {
-                deleteFavouriteMutation.mutate(cat.id);
-              }
-            }}
+            isPending={deleteFavouriteMutation.isPending && cat.id === deleteFavouriteMutation.variables}
+            onClick={() => deleteFavouriteMutation.mutate(cat.id)}
           />
         )}
       />
-
-      {showLoader && <Spinner size="md" position="fixed" left="6" bottom="6" color="fg.muted" />}
     </Box>
   );
 };

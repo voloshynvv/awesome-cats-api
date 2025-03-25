@@ -3,8 +3,8 @@ import { apiClient } from '../api-client';
 import { Breed } from '../types';
 import { getBreedsQueryOptions } from './get-breeds';
 
-const getBreedById = async (breedId: string) => {
-  const response = await apiClient.get<Breed>(`/breeds/${breedId}`);
+const getBreedById = async (breedId: string): Promise<Breed> => {
+  const response = await apiClient.get(`/breeds/${breedId}`);
   return response.data;
 };
 

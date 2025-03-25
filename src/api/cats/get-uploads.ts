@@ -2,14 +2,15 @@ import { infiniteQueryOptions } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { UploadedCat } from '../types';
 import { LIMIT } from '../constants';
+import { sessionId } from '../user-session';
 
-const getUploads = async (page: number) => {
-  const response = await apiClient.get<UploadedCat[]>('/images', {
+const getUploads = async (page: number): Promise<UploadedCat[]> => {
+  const response = await apiClient.get('/images', {
     params: {
       page,
       limit: LIMIT,
-      sub_id: 'my-user-id',
-      user_id: 'my-user-id',
+      sub_id: sessionId,
+      user_id: sessionId,
     },
   });
   return response.data;
