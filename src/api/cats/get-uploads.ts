@@ -11,6 +11,7 @@ const getUploads = async (page: number): Promise<UploadedCat[]> => {
       limit: LIMIT,
       sub_id: sessionId,
       user_id: sessionId,
+      order: 'DESC',
     },
   });
   return response.data;

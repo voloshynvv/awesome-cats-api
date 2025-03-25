@@ -1,8 +1,8 @@
 import { Box, Text } from '@chakra-ui/react';
 
 interface CursorProps {
-  x: number;
-  y: number;
+  x: number | null;
+  y: number | null;
   active: boolean;
 }
 

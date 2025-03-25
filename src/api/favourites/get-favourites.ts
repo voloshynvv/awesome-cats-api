@@ -10,6 +10,7 @@ const getFavourites = async (page: number): Promise<FavouriteCat[]> => {
       sub_id: sessionId,
       page,
       limit: LIMIT,
+      order: 'DESC',
     },
   });
   return response.data;

@@ -15,15 +15,17 @@ interface UploadedImageProps extends ButtonProps {
 }
 
 export const ImageWithCursor = ({ imageSrc, source, isPending, onClick, ...props }: UploadedImageProps) => {
-  const [active, setActive] = useState(false);
-  const { position, hasHover } = useMousePosition();
+  const [hover, setHover] = useState(false);
+  const position = useMousePosition();
+
+  const cursorActive = hover && position.x !== null && position.y !== null && !isPending;
 
   return (
     <>
       <Button
         unstyled
-        onMouseEnter={() => setActive(true)}
-        onMouseOut={() => setActive(false)}
+        onMouseEnter={() => setHover(true)}
+        onMouseOut={() => setHover(false)}
         onClick={onClick}
         rounded="2xl"
         overflow="hidden"
@@ -43,7 +45,7 @@ export const ImageWithCursor = ({ imageSrc, source, isPending, onClick, ...props
         )}
       </Button>
 
-      {!isPending && hasHover && <CustomCursor x={position.x} y={position.y} active={active} />}
+      <CustomCursor x={position.x} y={position.y} active={cursorActive} />
     </>
   );
 };

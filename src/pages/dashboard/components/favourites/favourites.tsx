@@ -12,7 +12,7 @@ export const Favourites = () => {
   const favouritesQuery = useInfiniteQuery(getFavouritesQueryOptions());
   const deleteFavouriteMutation = useDeleteFavourite();
 
-  if (favouritesQuery.isPending || favouritesQuery.isStale) {
+  if (favouritesQuery.isPending) {
     return <Spinner color="fg.muted" />;
   }
 

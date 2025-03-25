@@ -12,7 +12,7 @@ export const Uploads = () => {
   const uploadsQuery = useInfiniteQuery(getUploadsInfiniteQueryOptions());
   const deleteImageMutation = useDeleteImage();
 
-  if (uploadsQuery.isPending || uploadsQuery.isStale) {
+  if (uploadsQuery.isPending) {
     return <Spinner color="fg.muted" />;
   }
 

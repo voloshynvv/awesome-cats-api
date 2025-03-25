@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 
+interface Position {
+  x: number | null;
+  y: number | null;
+}
+
 export const useMousePosition = () => {
   const [hasHover, setHasHover] = useState(false);
-
-  const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [position, setPosition] = useState<Position>({ x: null, y: null });
 
   useEffect(() => {
     if (!hasHover) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      console.log('moving');
-
       setPosition({
         x: e.clientX,
         y: e.clientY,
@@ -35,5 +37,5 @@ export const useMousePosition = () => {
     return () => mediaQuery.removeEventListener('change', handleMediaQueryChange);
   }, []);
 
-  return { position, hasHover };
+  return position;
 };
