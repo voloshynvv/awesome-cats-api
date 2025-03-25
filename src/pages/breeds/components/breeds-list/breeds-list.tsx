@@ -5,8 +5,8 @@ import { Button, HStack, Skeleton, Text } from '@chakra-ui/react';
 import { getBreedsQueryOptions } from '@/api/breeds/get-breeds';
 import { getRandomInteger } from '@/utils/get-random-interger';
 
-const MIN_SKELETON_WIDTH = 60;
-const MAX_SKELETON_WIDTH = 140;
+const MIN_SKELETON_WIDTH = 85;
+const MAX_SKELETON_WIDTH = 160;
 
 interface BreedsListProps {
   search?: string;
@@ -20,7 +20,7 @@ export const BreedsList = ({ search = '' }: BreedsListProps) => {
       data-testid="skeleton"
       key={i}
       w={getRandomInteger(MIN_SKELETON_WIDTH, MAX_SKELETON_WIDTH) + 'px'}
-      h="32px"
+      h="9"
     />
   ));
 
@@ -40,7 +40,7 @@ export const BreedsList = ({ search = '' }: BreedsListProps) => {
         {isPending && skeleton}
 
         {breeds?.map((breed) => (
-          <Button key={breed.id} _hover={{ transform: 'translateY(-1px)' }} transition="transform" size="xs" asChild>
+          <Button key={breed.id} _hover={{ transform: 'translateY(-1px)' }} transition="transform" size="sm" asChild>
             <Link to={`/breeds/${breed.id}`}>{breed.name}</Link>
           </Button>
         ))}

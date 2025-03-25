@@ -36,7 +36,13 @@ export const Cats = ({ breedIds }: CatsProps) => {
         isFetchingNextPage={catsQuery.isFetchingNextPage}
         onNextPageClick={() => catsQuery.fetchNextPage()}
         render={(cat) => (
-          <CatImage key={cat.id} src={cat.url} isLiked={Boolean(cat.favourite?.id)} onClick={() => setCatId(cat.id)} />
+          <CatImage
+            key={cat.id}
+            src={cat.url}
+            isPlaceholderData={catsQuery.isPlaceholderData}
+            isLiked={Boolean(cat.favourite?.id)}
+            onClick={() => setCatId(cat.id)}
+          />
         )}
       />
 

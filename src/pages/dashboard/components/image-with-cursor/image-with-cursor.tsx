@@ -1,15 +1,17 @@
-import { Image } from '@chakra-ui/react';
-import { Button } from '@/components/ui/button';
 import { useMousePosition } from '@/hooks/use-mouse-position';
-import { CustomCursor } from './custom-cursor';
+import { Button, Image } from '@chakra-ui/react';
 import { useState } from 'react';
+import { CustomCursor } from './custom-cursor';
 
-interface FavouriteImageProps {
-  url: string;
+type ButtonProps = Omit<React.ComponentPropsWithoutRef<'button'>, 'onClick' | 'onMouseEnter' | 'onMouseOut'>;
+
+interface UploadedImageProps extends ButtonProps {
+  imageSrc: string;
+  source: 'favourite' | 'uploaded';
   onClick: () => void;
 }
 
-export const FavouriteImage = ({ url, onClick }: FavouriteImageProps) => {
+export const ImageWithCursor = ({ imageSrc, source, onClick, ...props }: UploadedImageProps) => {
   const [active, setActive] = useState(false);
   const { position, hasHover } = useMousePosition();
 
@@ -17,15 +19,16 @@ export const FavouriteImage = ({ url, onClick }: FavouriteImageProps) => {
     <>
       <Button
         unstyled
-        onClick={onClick}
         onMouseEnter={() => setActive(true)}
         onMouseOut={() => setActive(false)}
-        rounded="sm"
+        onClick={onClick}
+        rounded="2xl"
         overflow="hidden"
         position="relative"
         _hover={{ cursor: 'none' }}
+        {...props}
       >
-        <Image src={url} w="full" alt="favourite cat image" aspectRatio="landscape" />
+        <Image src={imageSrc} w="full" alt={`${source} cat image`} aspectRatio="landscape" />
       </Button>
 
       {hasHover && <CustomCursor x={position.x} y={position.y} active={active} />}

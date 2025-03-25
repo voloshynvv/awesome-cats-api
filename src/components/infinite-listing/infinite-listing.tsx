@@ -20,7 +20,7 @@ export const InfiniteListing = <T,>({
 }: InfiniteListingProps<T>) => {
   return (
     <>
-      <Grid gridTemplateColumns={{ sm: 'repeat(2, 1fr)' }} gap="4">
+      <Grid gridTemplateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap="4" px={{ base: '4', md: '0' }}>
         {entities.map(render)}
       </Grid>
 

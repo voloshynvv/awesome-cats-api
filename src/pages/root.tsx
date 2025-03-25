@@ -4,7 +4,7 @@ import { NavigationBar } from '@/components/navigation-bar/navigation-bar';
 
 export const Root = () => {
   return (
-    <Container as="main" maxW="2xl" py="4" pb="4.375rem">
+    <Container as="main" maxW="2xl" pt="8" pb="5.625rem">
       <NavigationBar />
 
       <Outlet />

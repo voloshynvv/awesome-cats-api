@@ -10,7 +10,9 @@ export const Breeds = () => {
   return (
     <>
       <HStack mb="8">
-        <Heading alignSelf="flex-start">Breeds</Heading>
+        <Heading pt="2px" alignSelf="flex-start" textStyle="2xl">
+          Breeds
+        </Heading>
 
         <SearchPopover onSubmit={setSearch} />
       </HStack>

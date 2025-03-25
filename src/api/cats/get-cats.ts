@@ -1,4 +1,4 @@
-import { infiniteQueryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, keepPreviousData } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { Cat } from '../types';
 import { LIMIT } from '../constants';
@@ -28,5 +28,6 @@ export const getCatsInfiniteQueryOptions = (breedIds: string[] = []) => {
 
       return lastPageParam + 1;
     },
+    placeholderData: keepPreviousData,
   });
 };

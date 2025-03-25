@@ -1,15 +1,5 @@
 import { Link as RouterLink } from 'react-router';
-import {
-  Image,
-  Box,
-  Heading,
-  Text,
-  Link,
-  Spinner,
-  IconButton,
-  useBreakpointValue,
-  DialogRootProps,
-} from '@chakra-ui/react';
+import { Image, Box, Heading, Text, Link, Spinner, IconButton } from '@chakra-ui/react';
 import { LuHeart, LuHeartCrack } from 'react-icons/lu';
 
 import { DialogRoot, DialogContent, DialogCloseTrigger } from '@/components/ui/dialog';
@@ -27,8 +17,6 @@ interface CatDialogProps {
 export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
   const addFavourite = useAddFavourite();
   const deleteFavourite = useDeleteFavourite();
-
-  const dialogSize = useBreakpointValue({ base: 'full', sm: 'sm' }) as DialogRootProps['size'];
 
   const isPending = addFavourite.isPending || deleteFavourite.isPending;
 
@@ -51,11 +39,10 @@ export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
   };
 
   return (
-    <DialogRoot size={dialogSize} placement={'center'} open={open} onOpenChange={onClose}>
+    <DialogRoot size="sm" placement="center" open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogCloseTrigger
-          top="2"
-          variant={{ base: 'surface', md: 'ghost' }}
+          variant="surface"
           md={{
             top: '0',
             insetEnd: '-12',

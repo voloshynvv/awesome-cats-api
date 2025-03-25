@@ -7,7 +7,7 @@ import { Favourites } from './components/favourites/favourites';
 export const Dashboard = () => {
   return (
     <Tabs.Root lazyMount unmountOnExit defaultValue="favourites">
-      <Tabs.List>
+      <Tabs.List flexWrap="wrap">
         <Tabs.Trigger value="favourites">
           Your favourites <span role="img">✨</span>
         </Tabs.Trigger>

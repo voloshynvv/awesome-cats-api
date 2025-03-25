@@ -3,13 +3,23 @@ import { Button } from '@/components/ui/button';
 
 interface CatImageProps {
   src: string;
-  onClick: () => void;
   isLiked: boolean;
+  isPlaceholderData: boolean;
+  onClick: () => void;
 }
 
-export const CatImage = ({ src, onClick, isLiked }: CatImageProps) => {
+export const CatImage = ({ src, onClick, isLiked, isPlaceholderData }: CatImageProps) => {
   return (
-    <Button unstyled onClick={onClick} className="group" rounded="sm" overflow="hidden" position="relative">
+    <Button
+      unstyled
+      onClick={onClick}
+      disabled={isPlaceholderData}
+      className="group"
+      rounded="2xl"
+      overflow="hidden"
+      position="relative"
+      opacity={isPlaceholderData ? '0.5' : '1'}
+    >
       <Image
         _groupHover={{ scale: '1.05' }}
         _groupFocusVisible={{ scale: '1.05' }}

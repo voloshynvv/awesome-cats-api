@@ -24,7 +24,7 @@ export const Gallery = () => {
 
   return (
     <>
-      <Heading mb="8">
+      <Heading mb="8" textStyle="2xl">
         Explore <span role="img">✨</span>
       </Heading>
 

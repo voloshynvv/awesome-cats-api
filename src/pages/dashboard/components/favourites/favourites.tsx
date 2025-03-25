@@ -2,11 +2,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Box, Spinner, Text } from '@chakra-ui/react';
 
 import { InfiniteListing } from '@/components/infinite-listing/infinite-listing';
-import { FavouriteImage } from './favourite-image';
 import { EmptyScreen } from '@/components/ui/empty-screen';
 
 import { getFavouritesQueryOptions } from '@/api/favourites/get-favourites';
 import { useDeleteFavourite } from '@/api/favourites/delete-favourite';
+import { ImageWithCursor } from '../image-with-cursor/image-with-cursor';
 
 export const Favourites = () => {
   const favouritesQuery = useInfiniteQuery(getFavouritesQueryOptions());
@@ -40,9 +40,10 @@ export const Favourites = () => {
         isFetchingNextPage={favouritesQuery.isFetchingNextPage}
         onNextPageClick={() => favouritesQuery.fetchNextPage()}
         render={(cat) => (
-          <FavouriteImage
+          <ImageWithCursor
             key={cat.id}
-            url={cat.image.url}
+            imageSrc={cat.image.url}
+            source="favourite"
             onClick={() => {
               if (!deleteFavouriteMutation.isPending) {
                 deleteFavouriteMutation.mutate(cat.id);

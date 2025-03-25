@@ -3,10 +3,10 @@ import { Box, Spinner, Text } from '@chakra-ui/react';
 
 import { EmptyScreen } from '@/components/ui/empty-screen';
 import { InfiniteListing } from '@/components/infinite-listing/infinite-listing';
-import { UploadedImage } from './uploaded-image';
 
 import { useDeleteImage } from '@/api/cats/delete-image';
 import { getUploadsInfiniteQueryOptions } from '@/api/cats/get-uploads';
+import { ImageWithCursor } from '../image-with-cursor/image-with-cursor';
 
 export const Uploads = () => {
   const uploadsQuery = useInfiniteQuery(getUploadsInfiniteQueryOptions());
@@ -43,11 +43,14 @@ export const Uploads = () => {
         onNextPageClick={() => uploadsQuery.fetchNextPage()}
         hasNextPage={uploadsQuery.hasNextPage}
         render={(cat) => (
-          <UploadedImage
-            key={cat.id}
-            url={cat.url}
-            isPending={deleteImageMutation.isPending}
-            onClick={() => deleteImageMutation.mutate(cat.id)}
+          <ImageWithCursor
+            imageSrc={cat.url}
+            source="uploaded"
+            onClick={() => {
+              if (!deleteImageMutation.isPending) {
+                deleteImageMutation.mutate(cat.id);
+              }
+            }}
           />
         )}
       />

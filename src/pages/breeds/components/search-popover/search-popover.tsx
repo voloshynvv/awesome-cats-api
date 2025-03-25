@@ -53,7 +53,6 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
       <PopoverTrigger asChild>
         <IconButton
           aria-label={open ? 'close search' : 'open search'}
-          size="xs"
           variant="plain"
           transition="scale 0.25s, opacity 0.25s"
         >
@@ -73,16 +72,14 @@ export const SearchPopover = ({ onSubmit }: SearchPopoverProps) => {
             <VisuallyHidden>Breed</VisuallyHidden>
 
             <Input
+              bg="black"
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder="e.g. American Curl"
-              size="xs"
             />
           </Box>
 
-          <Button type="submit" size="xs">
-            Search
-          </Button>
+          <Button type="submit">Search</Button>
         </HStack>
       </PopoverContent>
     </PopoverRoot>

@@ -17,19 +17,19 @@ export const NavigationBar = () => {
     >
       <List.Root variant="plain" justifyContent="center" flexDirection="row" color="black" gap="3">
         <List.Item>
-          <Button unstyled asChild p="2" pl="4">
+          <Button unstyled asChild p="2.5" pl="4">
             <NavLink to="/">Gallery</NavLink>
           </Button>
         </List.Item>
 
         <List.Item>
-          <Button unstyled asChild p="2">
+          <Button unstyled asChild p="2.5">
             <NavLink to="/breeds">Breeds</NavLink>
           </Button>
         </List.Item>
 
         <List.Item>
-          <Button unstyled asChild p="2">
+          <Button unstyled asChild p="2.5" pr="4">
             <NavLink to="/dashboard">Dashboard</NavLink>
           </Button>
         </List.Item>
