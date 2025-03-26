@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Badge, List, Skeleton, Spinner, Flex } from '@chakra-ui/react';
+import { Box, Heading, Text, Badge, List, Spinner, Flex } from '@chakra-ui/react';
 
 import { useBreed } from '@/api/breeds/get-breed';
 
@@ -15,14 +15,11 @@ export const BreedDetails = ({ breedId }: BreedDetails) => {
         <Spinner />
       </Flex>
     );
-    return <Skeleton h="44px" />;
   }
 
   if (isError) {
     return <p>error</p>;
   }
-
-  console.log(breed);
 
   return (
     <Box flex="1" spaceY="4">

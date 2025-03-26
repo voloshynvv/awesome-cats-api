@@ -12,7 +12,7 @@ export const Breed = () => {
     <>
       <IconButton
         mb="4"
-        aria-label="back to all reviews"
+        aria-label="back to all breeds"
         asChild
         variant="ghost"
         md={{ transform: 'translateX(calc(-100% - 20px))', position: 'absolute' }}
