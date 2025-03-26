@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useUploadImage } from '@/api/cats/upload-image';
-import { Box, Button, HStack } from '@chakra-ui/react';
+import { Box, Button, HStack, VisuallyHidden } from '@chakra-ui/react';
 import { Alert } from '@/components/ui/alert';
 
 export const ImageUploader = () => {
@@ -30,6 +30,7 @@ export const ImageUploader = () => {
       setPreview(url);
       setFile(file);
     } else {
+      URL.revokeObjectURL(preview);
       reset();
     }
   };
@@ -54,12 +55,21 @@ export const ImageUploader = () => {
 
   return (
     <Box spaceY="5">
-      <Box>
-        <input ref={inputRef} type="file" onChange={handleChange} accept="image/png, image/jpeg" />
-      </Box>
+      <label>
+        <VisuallyHidden>Upload file</VisuallyHidden>
+        <input
+          aria-describedby="status"
+          ref={inputRef}
+          type="file"
+          onChange={handleChange}
+          accept="image/png, image/jpeg"
+        />
+      </label>
 
-      {status === 'success' && <Alert status="success" title="Image successfully uploaded" />}
-      {status === 'error' && <Alert status="error" title="Something went wrong while uploading the image" />}
+      {status === 'success' && <Alert id="status" role="alert" status="success" title="Image successfully uploaded" />}
+      {status === 'error' && (
+        <Alert id="status" role="alert" status="error" title="Something went wrong while uploading the image" />
+      )}
 
       {file && (
         <HStack>

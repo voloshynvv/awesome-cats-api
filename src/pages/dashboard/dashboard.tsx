@@ -9,15 +9,24 @@ export const Dashboard = () => {
     <Tabs.Root lazyMount unmountOnExit defaultValue="favourites">
       <Tabs.List flexWrap="wrap">
         <Tabs.Trigger value="favourites">
-          Your favourites <span role="img">✨</span>
+          Your favourites
+          <span aria-hidden role="img">
+            ✨
+          </span>
         </Tabs.Trigger>
 
         <Tabs.Trigger value="uploads">
-          Your Uploads <span role="img">📂</span>
+          Your Uploads
+          <span aria-hidden role="img">
+            📂
+          </span>
         </Tabs.Trigger>
 
         <Tabs.Trigger value="upload">
-          Upload <span role="img">📷</span>
+          Upload
+          <span aria-hidden role="img">
+            📷
+          </span>
         </Tabs.Trigger>
       </Tabs.List>
 

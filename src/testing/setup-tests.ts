@@ -5,19 +5,11 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { server } from './mocks/node';
 
 /* -- MSW -- */
-
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-server.events.on('request:start', ({ request }) => {
-  console.log('MSW intercepted:', request.method, request.url);
-});
-
-/* -- MSW -- */
-
 /* -- Chakra -- */
-
 const { window } = new JSDOM();
 
 // ResizeObserver mock
@@ -42,8 +34,8 @@ window.Element.prototype.scrollIntoView = () => {};
 window.requestAnimationFrame = (cb) => setTimeout(cb, 1000 / 60);
 
 // URL object mock
-window.URL.createObjectURL = () => 'https://i.pravatar.cc/300';
-window.URL.revokeObjectURL = () => {};
+URL.createObjectURL = () => 'https://i.pravatar.cc/300';
+URL.revokeObjectURL = () => {};
 
 // navigator mock
 Object.defineProperty(window, 'navigator', {
@@ -69,5 +61,3 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 Object.assign(global, { window, document: window.document });
-
-/* -- Chakra -- */
