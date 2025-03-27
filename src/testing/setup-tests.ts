@@ -3,6 +3,7 @@ import { vi, beforeAll, afterEach, afterAll } from 'vitest';
 import { JSDOM } from 'jsdom';
 import ResizeObserver from 'resize-observer-polyfill';
 import { server } from './mocks/node';
+import { createMatchMedia } from './test-utils';
 
 /* -- MSW -- */
 beforeAll(() => server.listen());
@@ -48,16 +49,7 @@ Object.defineProperty(window, 'navigator', {
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(), // deprecated
-    removeListener: vi.fn(), // deprecated
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  })),
+  value: vi.fn().mockImplementation((media) => createMatchMedia({ media })),
 });
 
 Object.assign(global, { window, document: window.document });

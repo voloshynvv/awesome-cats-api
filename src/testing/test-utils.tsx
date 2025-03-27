@@ -32,3 +32,14 @@ export const renderWithProviders = (ui: React.ReactNode, options: CustomRenderOp
 
   return render(ui, { wrapper: Wrapper, ...rtlOptions });
 };
+
+export const createMatchMedia = ({ media, matches = false }: { media: string; matches?: boolean }) => ({
+  matches,
+  media,
+  onchange: null,
+  addListener: vi.fn(), // deprecated
+  removeListener: vi.fn(), // deprecated
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn(),
+});

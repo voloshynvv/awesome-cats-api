@@ -5,8 +5,10 @@ interface Position {
   y: number | null;
 }
 
+const query = '(hover: hover)';
+
 export const useMousePosition = () => {
-  const [hasHover, setHasHover] = useState(false);
+  const [hasHover, setHasHover] = useState(() => window.matchMedia(query).matches);
   const [position, setPosition] = useState<Position>({ x: null, y: null });
 
   useEffect(() => {
@@ -25,14 +27,13 @@ export const useMousePosition = () => {
   }, [hasHover]);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(hover: hover)');
+    const mediaQuery = window.matchMedia(query);
 
     const handleMediaQueryChange = () => {
       setHasHover(mediaQuery.matches);
     };
 
     mediaQuery.addEventListener('change', handleMediaQueryChange);
-    handleMediaQueryChange();
 
     return () => mediaQuery.removeEventListener('change', handleMediaQueryChange);
   }, []);
