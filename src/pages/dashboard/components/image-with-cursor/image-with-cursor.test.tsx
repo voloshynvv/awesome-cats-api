@@ -22,8 +22,6 @@ describe('ImageWithCursor', () => {
     expect(cursor).not.toBeVisible();
   });
 
-  it.only();
-
   it('can click', async () => {
     const mock = vi.fn();
 

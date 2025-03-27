@@ -3,7 +3,6 @@ import { vi, beforeAll, afterEach, afterAll } from 'vitest';
 import { JSDOM } from 'jsdom';
 import ResizeObserver from 'resize-observer-polyfill';
 import { server } from './mocks/node';
-import { createMatchMedia } from './test-utils';
 
 /* -- MSW -- */
 beforeAll(() => server.listen());

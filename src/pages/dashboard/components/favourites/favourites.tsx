@@ -45,6 +45,7 @@ export const Favourites = () => {
             key={cat.id}
             imageSrc={cat.image.url}
             source="favourite"
+            disabled={deleteFavouriteMutation.isPending}
             isPending={deleteFavouriteMutation.isPending && cat.id === deleteFavouriteMutation.variables}
             onClick={() => deleteFavouriteMutation.mutate(cat.id)}
           />

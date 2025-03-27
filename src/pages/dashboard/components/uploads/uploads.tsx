@@ -47,6 +47,7 @@ export const Uploads = () => {
             imageSrc={cat.url}
             source="uploaded"
             onClick={() => deleteImageMutation.mutate(cat.id)}
+            disabled={deleteImageMutation.isPending}
             isPending={deleteImageMutation.isPending && deleteImageMutation.variables === cat.id}
           />
         )}

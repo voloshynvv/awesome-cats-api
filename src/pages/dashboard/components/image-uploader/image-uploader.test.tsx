@@ -1,5 +1,5 @@
 import { renderWithProviders } from '@/testing/test-utils';
-import { fireEvent, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mswApiUrl } from '@/testing/mocks/handlers';
 import { server } from '@/testing/mocks/node';
@@ -13,15 +13,6 @@ const previewAlt = /cat preview/i;
 const fileInputLabel = /upload file/i;
 
 describe('ImageUploader', () => {
-  // beforeEach(() => {
-  //   vi.useFakeTimers({ shouldAdvanceTime: true });
-  // });
-
-  // afterEach(() => {
-  //   vi.runOnlyPendingTimers();
-  //   vi.useRealTimers();
-  // });
-
   it('renders file input', () => {
     renderWithProviders(<ImageUploader />);
 

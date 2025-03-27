@@ -31,7 +31,6 @@ export const ImageWithCursor = ({ imageSrc, source, isPending, onClick, ...props
         overflow="hidden"
         position="relative"
         _hover={{ cursor: 'none' }}
-        disabled={isPending}
         {...props}
       >
         <Image src={imageSrc} w="full" alt={`${source} cat image`} aspectRatio="landscape" />
