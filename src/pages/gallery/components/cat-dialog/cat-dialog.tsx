@@ -56,7 +56,7 @@ export const CatDialog = ({ cat, open, onClose }: CatDialogProps) => {
             {cat.breeds[0]?.name}
           </Heading>
 
-          <Text lineClamp="2">{cat.breeds[0].description}</Text>
+          <Text lineClamp="2">{cat.breeds[0]?.description}</Text>
 
           <Link asChild>
             <RouterLink to={`/breeds/${cat.breeds[0].id}`}>Read more</RouterLink>

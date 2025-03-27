@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from '@/testing/test-utils';
-import { mswBaseURL } from '@/testing/mocks/handlers';
+import { mswApiUrl } from '@/testing/mocks/handlers';
 import { server } from '@/testing/mocks/node';
 
 import { BreedsList } from './breeds-list';
@@ -23,7 +23,7 @@ describe('BreedsList', () => {
 
     it('failed breed query', async () => {
       server.use(
-        http.get(mswBaseURL('/breeds'), () => {
+        http.get(mswApiUrl('/breeds'), () => {
           return new HttpResponse(null, { status: 500 });
         }),
       );

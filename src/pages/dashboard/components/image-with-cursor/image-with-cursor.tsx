@@ -10,7 +10,7 @@ type ButtonProps = Omit<React.ComponentPropsWithoutRef<'button'>, 'onClick' | 'o
 interface UploadedImageProps extends ButtonProps {
   imageSrc: string;
   source: 'favourite' | 'uploaded';
-  isPending: boolean;
+  isPending?: boolean;
   onClick: () => void;
 }
 
@@ -39,7 +39,7 @@ export const ImageWithCursor = ({ imageSrc, source, isPending, onClick, ...props
         {isPending && (
           <Box pos="absolute" inset="0" bg="bg/80">
             <Center h="full">
-              <Spinner color="fg.muted" />
+              <Spinner data-testid="spinner" color="fg.muted" />
             </Center>
           </Box>
         )}

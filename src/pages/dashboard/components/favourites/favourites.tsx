@@ -29,7 +29,10 @@ export const Favourites = () => {
   return (
     <Box>
       <Text mb="2" fontStyle="italic" color="gray.200">
-        Oops! Be careful — clicking on the cat image will remove it instantly <span role="img">🐱💨</span>
+        Oops! Be careful — clicking on the cat image will remove it instantly
+        <span aria-hidden role="img">
+          🐱💨
+        </span>
       </Text>
 
       <InfiniteListing

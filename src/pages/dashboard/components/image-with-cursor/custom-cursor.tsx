@@ -7,6 +7,8 @@ interface CursorProps {
 }
 
 export const CustomCursor = ({ x, y, active }: CursorProps) => {
+  console.log('cursor', active);
+
   return (
     <Box
       w="fit"
@@ -22,6 +24,7 @@ export const CustomCursor = ({ x, y, active }: CursorProps) => {
       alignItems="center"
       pointerEvents="none"
       zIndex="docked"
+      data-testid="cursor"
     >
       <img src="/sticker.webp" width="40px" height="40px" alt="" />
       <Text color="gray.100">why?</Text>

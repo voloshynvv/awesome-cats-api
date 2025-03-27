@@ -1,10 +1,10 @@
 import { Grid } from '@chakra-ui/react';
 import { Button } from '@/components/ui/button';
 
-interface InfiniteListingProps<T> {
+export interface InfiniteListingProps<T> {
   entities: T[];
   render: (item: T) => React.ReactElement;
-  isFetchingNextPage: boolean;
+  isFetchingNextPage?: boolean;
   buttonName?: string;
   onNextPageClick: () => void;
   hasNextPage: boolean;
