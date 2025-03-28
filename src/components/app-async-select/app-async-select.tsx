@@ -59,12 +59,12 @@ export const AppAsyncSelect = ({
       <SelectContent>
         {isPending && (
           <Box p="2" display="flex" justifyContent="center">
-            <Spinner color="fg.muted" />
+            <Spinner data-testid="spinner" color="fg.muted" />
           </Box>
         )}
         {isError && (
           <Text textAlign="center" p="2">
-            Somethins went wrong
+            Something went wrong
           </Text>
         )}
         {collection.items.map((item) => (
