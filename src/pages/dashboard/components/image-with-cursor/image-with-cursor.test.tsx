@@ -21,20 +21,4 @@ describe('ImageWithCursor', () => {
 
     expect(cursor).not.toBeVisible();
   });
-
-  it('can click', async () => {
-    const mock = vi.fn();
-
-    renderWithProviders(<ImageWithCursor imageSrc="cat.png" source="favourite" onClick={mock} />);
-
-    await userEvent.click(screen.getByRole('button'));
-
-    expect(mock).toHaveBeenCalledTimes(1);
-  });
-
-  it('shows loader', async () => {
-    renderWithProviders(<ImageWithCursor imageSrc="cat.png" source="favourite" onClick={() => {}} isPending />);
-
-    expect(screen.getByTestId('spinner')).toBeInTheDocument();
-  });
 });

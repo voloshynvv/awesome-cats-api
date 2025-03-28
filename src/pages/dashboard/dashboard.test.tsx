@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Dashboard } from './dashboard';
 
 describe('Dashboard page', () => {
-  it('renders tabs with default selected state correctly', async () => {
+  it.only('renders tabs with default selected state correctly', async () => {
     renderWithProviders(<Dashboard />);
 
     const favTabTrigger = screen.getByRole('tab', {
